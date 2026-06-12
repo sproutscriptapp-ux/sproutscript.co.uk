@@ -78,6 +78,15 @@
   .btn-leaf:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.22)}
   .btn-ghost{background:rgba(255,255,255,.16);color:#fff;border:2px solid rgba(255,255,255,.55)}
   .btn-ghost:hover{background:rgba(255,255,255,.26)}
+  .btn-soon{
+    background:rgba(255,255,255,.22);color:#fff;cursor:default;position:relative;
+    border:2px dashed rgba(255,255,255,.5);opacity:.95;
+  }
+  .soon-badge{
+    display:inline-block;background:#F5EFC8;color:#7A6210;font-family:'Nunito',sans-serif;
+    font-weight:800;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
+    padding:3px 10px;border-radius:999px;margin-left:8px;vertical-align:middle;
+  }
 
   /* floating sparkles */
   .sparkle{position:absolute;color:#F5EFC8;opacity:.7;animation:floaty 6s ease-in-out infinite;font-size:1.4rem;z-index:1}
@@ -200,8 +209,7 @@
       <p class="lead">SproutScript turns quick notes tapped in during your day into EYFS observations, daily diaries and inspection-ready records — so your evenings go back to being yours.</p>
       <p class="sub">Designed by a childminder. Typed by her husband.</p>
       <div class="btn-row">
-        <!-- TODO: replace # with your real App Store link -->
-        <a class="btn btn-leaf" href="#">Download on the App&nbsp;Store</a>
+        <span class="btn btn-soon">Download on the App&nbsp;Store <span class="soon-badge">Coming soon</span></span>
         <a class="btn btn-ghost" href="#founding">Become a founding member</a>
       </div>
     </div>
