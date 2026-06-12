@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SproutScript — Childminding paperwork, done by bedtime</title>
+<meta name="description" content="SproutScript turns quick notes during your day into EYFS observations, daily diaries and inspection-ready records. Designed by a childminder. Typed by her husband.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#56A0C7;
+    --sky-deep:#3D7FA6;
+    --ink:#27506B;
+    --leaf:#6FAE3F;
+    --leaf-deep:#3E7A2A;
+    --cream:#FAF7EC;
+    --white:#FFFFFF;
+    --shadow:0 8px 24px rgba(39,80,107,.12);
+    --radius:22px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Nunito',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.65;
+    font-size:17px;
+  }
+  h1,h2,h3{font-family:'Baloo 2',cursive;line-height:1.15;color:var(--ink)}
+  img{max-width:100%;display:block}
+  a{color:var(--sky-deep)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* ---------- Header ---------- */
+  header{
+    background:var(--cream);
+    position:sticky;top:0;z-index:50;
+    border-bottom:1px solid rgba(39,80,107,.08);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+  .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .nav-brand img{width:42px;height:42px;border-radius:11px;box-shadow:0 2px 8px rgba(39,80,107,.18)}
+  .nav-brand span{font-family:'Baloo 2',cursive;font-weight:700;font-size:1.35rem;color:var(--ink)}
+  .nav-links{display:flex;gap:26px;align-items:center}
+  .nav-links a{text-decoration:none;font-weight:600;color:var(--ink);font-size:.95rem}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-cta{
+    background:var(--leaf);color:#fff !important;padding:9px 20px;border-radius:999px;
+    box-shadow:0 3px 10px rgba(111,174,63,.4);transition:transform .15s ease;
+  }
+  .nav-cta:hover{transform:translateY(-1px)}
+  @media(max-width:640px){.nav-links a:not(.nav-cta){display:none}}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:linear-gradient(180deg,#5BA5CB 0%, #56A0C7 60%, #4E97BE 100%);
+    color:#fff;position:relative;overflow:hidden;
+  }
+  .hero-inner{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;
+    padding:72px 0 96px;position:relative;z-index:2;
+  }
+  .hero h1{color:#fff;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;margin-bottom:18px}
+  .hero p.lead{font-size:1.2rem;opacity:.95;margin-bottom:14px;max-width:34rem}
+  .hero p.sub{font-size:1rem;opacity:.85;margin-bottom:30px;font-style:italic}
+  .hero-art img{border-radius:var(--radius);box-shadow:0 16px 48px rgba(0,0,0,.22)}
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{
+    display:inline-block;text-decoration:none;font-weight:700;font-family:'Baloo 2',cursive;
+    padding:14px 30px;border-radius:999px;font-size:1.05rem;transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-leaf{background:var(--leaf);color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+  .btn-leaf:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.22)}
+  .btn-ghost{background:rgba(255,255,255,.16);color:#fff;border:2px solid rgba(255,255,255,.55)}
+  .btn-ghost:hover{background:rgba(255,255,255,.26)}
+
+  /* floating sparkles */
+  .sparkle{position:absolute;color:#F5EFC8;opacity:.7;animation:floaty 6s ease-in-out infinite;font-size:1.4rem;z-index:1}
+  .sparkle:nth-child(2){animation-delay:1.5s;font-size:1rem}
+  .sparkle:nth-child(3){animation-delay:3s;font-size:1.8rem}
+  .sparkle:nth-child(4){animation-delay:4.5s;font-size:1.1rem}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @media(prefers-reduced-motion:reduce){.sparkle{animation:none}}
+  @media(max-width:820px){
+    .hero-inner{grid-template-columns:1fr;padding:48px 0 64px;text-align:center}
+    .hero p.lead{margin-left:auto;margin-right:auto}
+    .btn-row{justify-content:center}
+    .hero-art{max-width:480px;margin:0 auto}
+  }
+
+  /* wave divider */
+  .wave{display:block;width:100%;height:60px;margin-top:-1px}
+
+  /* ---------- Story ---------- */
+  .story{padding:72px 0 56px}
+  .story-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+  .story img{border-radius:var(--radius);background:#fff;box-shadow:var(--shadow)}
+  .eyebrow{
+    display:inline-block;font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--leaf-deep);background:rgba(111,174,63,.14);padding:5px 14px;border-radius:999px;margin-bottom:14px;
+  }
+  .story h2{font-size:clamp(1.7rem,3.5vw,2.4rem);margin-bottom:16px}
+  .story p{margin-bottom:14px}
+  .story .tagline{font-family:'Baloo 2',cursive;font-weight:700;font-size:1.25rem;color:var(--sky-deep)}
+  @media(max-width:820px){.story-grid{grid-template-columns:1fr}.story img{max-width:380px;margin:0 auto}}
+
+  /* ---------- Features ---------- */
+  .features{padding:56px 0 72px}
+  .features h2{text-align:center;font-size:clamp(1.7rem,3.5vw,2.4rem);margin-bottom:10px}
+  .features .intro{text-align:center;max-width:38rem;margin:0 auto 44px}
+  .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{
+    background:#fff;border-radius:var(--radius);padding:30px 26px;box-shadow:var(--shadow);
+    border-top:5px solid var(--leaf);
+  }
+  .card .emoji{font-size:2rem;margin-bottom:12px}
+  .card h3{font-size:1.2rem;margin-bottom:8px}
+  .card p{font-size:.97rem}
+  @media(max-width:820px){.card-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto}}
+
+  /* ---------- How it works ---------- */
+  .how{background:var(--white);padding:72px 0}
+  .how h2{text-align:center;font-size:clamp(1.7rem,3.5vw,2.4rem);margin-bottom:44px}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:step}
+  .step{position:relative;padding:0 10px;text-align:center}
+  .step::before{
+    counter-increment:step;content:counter(step);
+    display:flex;align-items:center;justify-content:center;
+    width:54px;height:54px;margin:0 auto 16px;border-radius:50%;
+    background:var(--sky);color:#fff;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.4rem;
+    box-shadow:0 4px 12px rgba(86,160,199,.4);
+  }
+  .step h3{font-size:1.15rem;margin-bottom:8px}
+  .step p{font-size:.97rem}
+  @media(max-width:820px){.steps{grid-template-columns:1fr;max-width:440px;margin:0 auto;gap:36px}}
+
+  /* ---------- Founding members ---------- */
+  .founding{padding:80px 0;background:linear-gradient(180deg,#56A0C7,#4E97BE);color:#fff;position:relative;overflow:hidden}
+  .founding-grid{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;position:relative;z-index:2}
+  .founding img{width:200px;border-radius:36px;box-shadow:0 16px 40px rgba(0,0,0,.25)}
+  .founding h2{color:#fff;font-size:clamp(1.7rem,3.5vw,2.4rem);margin-bottom:14px}
+  .founding p{opacity:.95;margin-bottom:12px;max-width:36rem}
+  .founding ul{margin:0 0 24px 1.2rem}
+  .founding li{margin-bottom:6px}
+  .founding strong{color:#F5EFC8}
+  @media(max-width:820px){
+    .founding-grid{grid-template-columns:1fr;text-align:center}
+    .founding img{margin:0 auto}
+    .founding ul{text-align:left;max-width:30rem;margin:0 auto 24px}
+  }
+
+  /* ---------- Trust ---------- */
+  .trust{padding:64px 0}
+  .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .trust .card{border-top-color:var(--sky)}
+  @media(max-width:820px){.trust-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto}}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--ink);color:#CFE3EF;padding:44px 0 36px;font-size:.93rem}
+  .foot-grid{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-start}
+  .foot-brand{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .foot-brand img{width:34px;height:34px;border-radius:9px}
+  .foot-brand span{font-family:'Baloo 2',cursive;font-weight:700;font-size:1.15rem;color:#fff}
+  footer a{color:#A9D3EA;text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  .foot-links{display:flex;flex-direction:column;gap:8px}
+  .foot-note{margin-top:28px;opacity:.6;font-size:.85rem}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="nav-brand" href="#top">
+      <img src="assets/app-icon.jpg" alt="SproutScript icon">
+      <span>SproutScript</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#story">Our story</a>
+      <a href="#features">What it does</a>
+      <a href="#founding">Founding members</a>
+      <a class="nav-cta" href="#founding">Get the app</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <span class="sparkle" style="top:12%;left:6%">✦</span>
+  <span class="sparkle" style="top:28%;right:8%">✦</span>
+  <span class="sparkle" style="bottom:22%;left:12%">✦</span>
+  <span class="sparkle" style="bottom:34%;right:18%">✦</span>
+  <div class="wrap hero-inner">
+    <div>
+      <h1>Goodbye, 7pm paperwork pile.</h1>
+      <p class="lead">SproutScript turns quick notes tapped in during your day into EYFS observations, daily diaries and inspection-ready records — so your evenings go back to being yours.</p>
+      <p class="sub">Designed by a childminder. Typed by her husband.</p>
+      <div class="btn-row">
+        <!-- TODO: replace # with your real App Store link -->
+        <a class="btn btn-leaf" href="#">Download on the App&nbsp;Store</a>
+        <a class="btn btn-ghost" href="#founding">Become a founding member</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="assets/banner.jpg" alt="SproutScript — a friendly cabbage character hugging two little sprouts, with the tagline 'Childminding management made simple'">
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0,30 C240,60 480,0 720,20 C960,40 1200,55 1440,25 L1440,60 L0,60 Z" fill="#FAF7EC"/></svg>
+</section>
+
+<section class="story" id="story">
+  <div class="wrap story-grid">
+    <img src="assets/splash.jpg" alt="The SproutScript mascot — a smiling cabbage cuddling two baby sprouts">
+    <div>
+      <span class="eyebrow">Our story</span>
+      <h2>Built at our kitchen table, not in a boardroom.</h2>
+      <p>SproutScript wasn't designed by a tech company guessing what childminders need. It was designed by a registered childminder who spent years losing every evening to daily diaries and EYFS write-ups — and finally made her husband build the app she actually wanted.</p>
+      <p>Every feature exists because she needed it in her own setting. And when something annoys you, it probably annoys her too — so it gets fixed.</p>
+      <p class="tagline">They have ticket queues. We have a childminder at the dinner table.</p>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="wrap">
+    <h2>Your whole day, written up for you</h2>
+    <p class="intro">Tap quick notes while the children play. SproutScript does the typing.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="emoji">📝</div>
+        <h3>Quick notes → EYFS observations</h3>
+        <p>Capture moments in seconds during the day. SproutScript turns them into proper EYFS observations, linked and ready — no more "Ofsted brain" at 9pm.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">📖</div>
+        <h3>Daily diaries, done by pick-up</h3>
+        <p>Parents get a lovely daily diary of meals, naps, nappies and adventures — built from the notes you already tapped, not retyped from memory.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">✅</div>
+        <h3>Inspection-ready records</h3>
+        <p>Everything stored neatly in one place, so when the inspection call comes you're calm, organised, and already prepared.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>Tap as you go</h3>
+        <p>A quick note when something happens — a snack, a nap, a lovely bit of mark-making. Seconds, not minutes.</p>
+      </div>
+      <div class="step">
+        <h3>SproutScript writes it up</h3>
+        <p>Your notes become observations, diaries and records automatically, in the format you need.</p>
+      </div>
+      <div class="step">
+        <h3>Evenings are yours again</h3>
+        <p>Share diaries with parents, file your records, and close the laptop. The 7pm pile is gone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="founding" id="founding">
+  <div class="wrap founding-grid">
+    <img src="assets/app-icon.jpg" alt="SproutScript app icon">
+    <div>
+      <span class="eyebrow" style="background:rgba(255,255,255,.18);color:#F5EFC8">Limited places</span>
+      <h2>Become a founding member</h2>
+      <p>We're growing SproutScript one region at a time, with real childminders shaping what we build next. In each founding region:</p>
+      <ul>
+        <li><strong>5 childminders get SproutScript free for life</strong> — in exchange for using it with your real setting for 3 months, a couple of honest feedback chats, and telling us everything that's wrong with it.</li>
+        <li><strong>The next 10 get 50% off for life</strong> as founding members.</li>
+      </ul>
+      <p>That's it — 15 places per region, then we move on. No catch, and no card details for testers. The founding programme closes when all regions are filled.</p>
+      <div class="btn-row">
+        <!-- TODO: replace with your founding-member application form link (e.g. Google Form) -->
+        <a class="btn btn-leaf" href="mailto:SproutScriptApp@gmail.com?subject=Founding%20member%20application">Apply in 2 minutes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="wrap">
+    <div class="trust-grid">
+      <div class="card">
+        <div class="emoji">👩‍🏫</div>
+        <h3>Childminder-led</h3>
+        <p>Co-founded by a registered childminder. Feature ideas come from real settings — including yours, once you're in.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">🔒</div>
+        <h3>Children's data, taken seriously</h3>
+        <p>Data protection was a priority from day one. ICO registered, with a plain-English privacy policy — and we're happy to answer the GDPR questions, because we'd ask them too.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">🛠️</div>
+        <h3>Fixed by Thursday</h3>
+        <p>No investors, no ticket queue — just two people who use the app every day. If something annoys you, tell us, and it gets fixed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <img src="assets/app-icon.jpg" alt="">
+          <span>SproutScript</span>
+        </div>
+        <p>Childminding management made simple.</p>
+      </div>
+      <div class="foot-links">
+        <a href="#story">Our story</a>
+        <a href="#features">What it does</a>
+        <a href="#founding">Founding members</a>
+      </div>
+      <div class="foot-links">
+        <a href="privacy.html">Privacy policy</a>
+        <a href="terms.html">Terms of service</a>
+        <a href="mailto:SproutScriptApp@gmail.com">SproutScriptApp@gmail.com</a>
+      </div>
+    </div>
+    <p class="foot-note">© 2026 SproutScript. Made with love (and mild complaining) at a kitchen table in the UK.</p>
+  </div>
+</footer>
+
+</body>
+</html>
